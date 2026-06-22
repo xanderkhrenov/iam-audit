@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package iam.audit.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "iam-audit/api/proto/iam/audit/v1;auditv1";
+
+message AuditEnvelope {
+  string id = 1;
+  string schema_id = 2;
+  string schema_version = 3;
+  string event_type = 4;
+  string source = 5;
+  string correlation_id = 6;
+  string trace_id = 7;
+  string ticket_id = 8;
+  Principal actor = 9;
+  Principal subject = 10;
+  Resource resource = 11;
+  string action = 12;
+  Decision decision = 13;
+  string reason = 14;
+  google.protobuf.Timestamp timestamp = 15;
+  google.protobuf.Timestamp received_at = 16;
+  map<string, string> extensions = 17;
+  map<string, string> fields = 18;
+  string prev_hash = 19;
+  string hash = 20;
+  bytes payload = 21;
+}
+
+message Principal {
+  string id = 1;
+  string type = 2;
+  string display_name = 3;
+  map<string, string> attributes = 4;
+}
+
+message Resource {
+  string system = 1;
+  string role = 2;
+  string path = 3;
+  string environment = 4;
+  string criticality = 5;
+  map<string, string> attributes = 6;
+}
+
+enum Decision {
+  DECISION_UNSPECIFIED = 0;
+  DECISION_ALLOW = 1;
+  DECISION_DENY = 2;
+}

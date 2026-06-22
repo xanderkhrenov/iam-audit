@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IAM Audit MVP</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>IAM Audit</h1>
+      <p>Централизованный аудит и мониторинг событий доступа</p>
+    </div>
+    <button id="seedBtn">Загрузить демо-события</button>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Поиск событий</h2>
+      <form id="filters">
+        <input name="q" placeholder="Любое поле или вложенное значение">
+        <input name="actor" placeholder="actor">
+        <input name="subject" placeholder="subject">
+        <input name="system" placeholder="system">
+        <input name="field" placeholder="field path">
+        <input name="field_value" placeholder="field value">
+        <select name="action">
+          <option value="">action</option>
+          <option>approve_access</option>
+          <option>grant_role</option>
+          <option>revoke_role</option>
+          <option>expire_access</option>
+          <option>extend_access</option>
+        </select>
+        <select name="decision">
+          <option value="">decision</option>
+          <option>allow</option>
+          <option>deny</option>
+        </select>
+        <input name="correlation_id" placeholder="correlation_id / ticket">
+        <button>Найти</button>
+      </form>
+      <div class="toolbar">
+        <button id="exportBtn">Экспорт SIEM</button>
+        <button id="integrityBtn">Проверить hash chain</button>
+      </div>
+      <div id="events"></div>
+    </section>
+
+    <aside>
+      <section class="panel">
+        <h2>Админка событий</h2>
+        <form id="adminEventForm" class="admin-form">
+          <input name="schema_id" placeholder="schema_id" value="iam.access.lifecycle">
+          <input name="schema_version" placeholder="schema_version" value="1">
+          <input name="source" placeholder="source" value="admin-ui">
+          <input name="ticket_id" placeholder="ticket_id" value="REQ-MANUAL-1">
+          <input name="correlation_id" placeholder="correlation_id" value="REQ-MANUAL-1">
+          <input name="actor_id" placeholder="actor_id" value="admin">
+          <input name="actor_display_name" placeholder="actor display name" value="Local Admin">
+          <input name="subject_id" placeholder="subject_id" value="user-new">
+          <input name="subject_display_name" placeholder="subject display name" value="Manual User">
+          <input name="resource_system" placeholder="resource system" value="erp">
+          <input name="resource_role" placeholder="resource role" value="auditor">
+          <input name="resource_path" placeholder="resource path" value="/erp/roles/auditor">
+          <input name="resource_environment" placeholder="environment" value="prod">
+          <input name="resource_criticality" placeholder="criticality" value="high">
+          <select name="action">
+            <option>grant_role</option>
+            <option>approve_access</option>
+            <option>revoke_role</option>
+            <option>expire_access</option>
+            <option>extend_access</option>
+          </select>
+          <select name="decision">
+            <option>allow</option>
+            <option>deny</option>
+          </select>
+          <input name="reason" placeholder="reason" value="created from admin UI">
+          <textarea name="fields" rows="5">approval.policy=manual-admin
+approval.risk_score=45
+access.expires_at=2026-12-31T00:00:00Z
+event.order_id=10001
+service.id=erp
+service.name=ERP
+result.role_id=auditor
+result.comment=created from admin UI</textarea>
+          <button>Создать событие</button>
+        </form>
+        <pre id="adminResult"></pre>
+      </section>
+
+      <section class="panel">
+        <h2>Отчеты</h2>
+        <button data-report="roles-by-system">Роли по системам</button>
+        <button data-report="critical-approvals">Согласования critical</button>
+        <button data-report="auto-revocations">Авто-отзывы</button>
+        <button data-report="expirations">Истекшие и продленные</button>
+        <pre id="report"></pre>
+      </section>
+
+      <section class="panel">
+        <h2>Журнал обращений</h2>
+        <button id="accessLogBtn">Обновить</button>
+        <pre id="accessLog"></pre>
+      </section>
+    </aside>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

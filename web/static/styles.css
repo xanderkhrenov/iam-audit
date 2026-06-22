@@ -1,0 +1,130 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f7f9;
+  --ink: #17202a;
+  --muted: #607080;
+  --line: #d8e0e7;
+  --panel: #ffffff;
+  --accent: #0f766e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+h1, h2, p { margin: 0; }
+h1 { font-size: 28px; }
+h2 { margin-bottom: 14px; font-size: 18px; }
+p { color: var(--muted); }
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  padding: 20px 32px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+input, select, textarea, button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+}
+
+textarea { resize: vertical; }
+
+button {
+  cursor: pointer;
+  color: white;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+aside {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+
+aside button, .toolbar button { margin: 0 8px 8px 0; }
+
+.admin-form {
+  grid-template-columns: 1fr 1fr;
+}
+
+.admin-form textarea,
+.admin-form button {
+  grid-column: 1 / -1;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.event:first-child { border-top: 0; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e5f4f2;
+  color: #0f5f59;
+  font-weight: 650;
+}
+
+.meta { color: var(--muted); font-size: 13px; }
+
+code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #eef2f5;
+}
+
+pre {
+  max-height: 360px;
+  overflow: auto;
+  padding: 12px;
+  border-radius: 6px;
+  background: #101820;
+  color: #d7e2ea;
+}
+
+@media (max-width: 900px) {
+  header, main { padding: 16px; }
+  main { grid-template-columns: 1fr; }
+  form { grid-template-columns: 1fr; }
+  .event { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package iam.audit.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "iam-audit/api/proto/iam/audit/v1;auditv1";
+
+message Metadata {
+  string ip = 1;
+  string platform = 2;
+  string user_agent = 3;
+  string device_id = 4;
+  string email = 5;
+}
+
+message Actor {
+  string id = 1;
+  Metadata metadata = 2;
+}
+
+message Service {
+  string id = 1;
+  string name = 2;
+  repeated Actor owners = 3;
+  Metadata metadata = 4;
+}
+
+message Access {
+  string id = 1;
+  Service service = 2;
+  google.protobuf.Timestamp since = 3;
+  google.protobuf.Timestamp till = 4;
+}
+
+message Role {
+  string id = 1;
+  repeated Access accesses = 2;
+}
+
+message Result {
+  string decision = 1;
+  Role role = 2;
+  string comment = 3;
+}
+
+message IAMAuditEvent {
+  string id = 1;
+  string trace_id = 2;
+  int64 order_id = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  string environment = 5;
+  string type = 6;
+  Actor subject = 7;
+  repeated Service services = 8;
+  string request_comment = 9;
+  Actor admin = 10;
+  Result result = 11;
+}
